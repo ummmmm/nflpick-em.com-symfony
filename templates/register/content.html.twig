@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+{% block content %}
+	<form action="?screen=register" method="post">
+		<fieldset>
+			<legend>What's Your Name</legend>
+			<label for="fname">First Name</label>
+			<input type="text" name="fname" id="firstName" title="Please enter your first name" value="" />
+			<br />
+			<label for="lname">Last Name</label>
+			<input type="text" name="lname" id="lastName" value="" />
+		</fieldset>
+
+		<fieldset>
+			<legend>What's Your Email</legend>
+			<label for="email">Email Address</label>
+			<input type="text" name="email" id="email" value="" />
+			<br />
+			<label for="confirmEmail">Confirm Email Address</label>
+			<input type="text" name="cemail" id="confirmEmail" value="" />
+		</fieldset>
+
+		<fieldset>
+			<legend>Choose Your Password</legend>
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password" />
+			<br />
+			<label for="confirmPassword">Confirm Password</label>
+			<input type="password" name="cpass" id="confirmPassword" />
+		</fieldset>
+
+		<input type="hidden" name="update" value="1" />
+		<input type="submit" name="register" id="register" value="Register" />
+	</form>
+{% endblock %}

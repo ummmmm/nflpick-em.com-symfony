@@ -1,0 +1,11 @@
+{% extends'base.html.twig' %}
+
+{% block title %}News{% endblock %}
+
+{% block content %}
+	{% for entry in news %}
+		<h1>{{ entry.title }}</h1>
+		<div class="descr">{{ entry.postDt }}</div>
+		<p>{{ entry.data | raw }}</p>
+	{% endfor %}
+{% endblock %}

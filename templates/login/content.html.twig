@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<form action="{{ path( 'app_login' ) }}" method="post">
+		<fieldset>
+			<legend>Enter Your Login Info</legend>
+			<label for="email">Email Address</label>
+			<input type="text" name="email" id="loginEmail" value="" />
+			<br />
+			<label for="password">Password</label>
+			<input type="password" name="password" id="loginPassword" value="" />
+			<br />
+			<input type="hidden" name="update" value="1" />
+			<input type="submit" name="login" id="login" value="Login" /><br />
+			<a href="#" title="Forgotten Password?">Forgotten Password?</a>
+		</fieldset>
+	</form>
+{% endblock %}

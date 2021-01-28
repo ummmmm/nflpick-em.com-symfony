@@ -1,0 +1,24 @@
+{% if not is_granted( 'IS_AUTHENTICATED_FULLY' ) %}
+	<h1>Quick Links</h1>
+	<ul>
+		<li><a href="{{ path( 'app_register' ) }}" title="Register">Register</a></li>
+		<li><a href="{{ path( 'app_login' ) }}" title="Login">Login</a></li>
+		<li><a href="" title="Scheduled">Schedule</a></li>
+		<li><a href="{{ path( 'app_contact' ) }}" title="Contact">Contact Us</a></li>
+		<li><a href="" title="Online Users">Online Users</a></li>
+	</ul>
+{% else %}
+	<h1>User Links</h1>
+	<ul>
+		<li><a href="{{ path( 'app_homepage' ) }}" title="Home">Home Page</a></li>
+		<li><a href="" title="User Control Panel">User Control Panel</a></li>
+		{% if is_granted( 'ROLE_ADMIN' ) %}
+			<li><a href="" title="Admin Control Panel">Admin Control Panel</a></li>
+		{% endif %}
+		<li><a href="" title="Make Picks">Make Picks</a></li>
+		<li><a href="" title="View Other Picks">View Other Picks</a></li>
+		<li><a href="" title="Weekly Records">Weekly Records</a></li>
+		<li><a href="{{ path( 'app_leaderboard' ) }}" title="Leaderboard">Leaderboard</a></li>
+		<li><a href="" title="Logout" id="logout">Logout</a></li>
+	</ul>
+{% endif %}

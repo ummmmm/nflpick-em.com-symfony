@@ -1,0 +1,13 @@
+{% extends'base.html.twig' %}
+
+{% block content %}
+	{% for entry in news %}
+		<h1>{{ entry.title }}</h1>
+		<div class="descr">{{ entry.postDt }}</div>
+		<p>{{ entry.data | raw }}</p>
+	{% endfor %}
+
+	{% if news|length > 3 %}
+		<div align="center"><a href="{{ path( 'app_news' ) }}" title="View All News">View All Posted News</a></div>
+	{% endif %}
+{% endblock %}
