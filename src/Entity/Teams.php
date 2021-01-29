@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TeamsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,22 @@ class Teams
      * @ORM\Column(type="integer")
      */
     private $ties;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Games::class, mappedBy="away")
+     */
+    private $away_games;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Games::class, mappedBy="home")
+     */
+    private $home_games;
+
+    public function __construct()
+    {
+        $this->away_games = new ArrayCollection();
+        $this->home_games = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +138,66 @@ class Teams
     public function setTies(int $ties): self
     {
         $this->ties = $ties;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Games[]
+     */
+    public function getAwayGames(): Collection
+    {
+        return $this->away_games;
+    }
+
+    public function addAwayGame(Games $awayGame): self
+    {
+        if (!$this->away_games->contains($awayGame)) {
+            $this->away_games[] = $awayGame;
+            $awayGame->setAway($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAwayGame(Games $awayGame): self
+    {
+        if ($this->away_games->removeElement($awayGame)) {
+            // set the owning side to null (unless already changed)
+            if ($awayGame->getAway() === $this) {
+                $awayGame->setAway(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Games[]
+     */
+    public function getHomeGames(): Collection
+    {
+        return $this->home_games;
+    }
+
+    public function addHomeGame(Games $homeGame): self
+    {
+        if (!$this->home_games->contains($homeGame)) {
+            $this->home_games[] = $homeGame;
+            $homeGame->setHome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHomeGame(Games $homeGame): self
+    {
+        if ($this->home_games->removeElement($homeGame)) {
+            // set the owning side to null (unless already changed)
+            if ($homeGame->getHome() === $this) {
+                $homeGame->setHome(null);
+            }
+        }
 
         return $this;
     }

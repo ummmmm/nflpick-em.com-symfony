@@ -13,7 +13,7 @@
 		<li><a href="{{ path( 'app_homepage' ) }}" title="Home">Home Page</a></li>
 		<li><a href="" title="User Control Panel">User Control Panel</a></li>
 		{% if is_granted( 'ROLE_ADMIN' ) %}
-			<li><a href="" title="Admin Control Panel">Admin Control Panel</a></li>
+			<li><a href="{{ path( 'app_admin') }}" title="Admin Control Panel">Admin Control Panel</a></li>
 		{% endif %}
 		<li><a href="" title="Make Picks">Make Picks</a></li>
 		<li><a href="" title="View Other Picks">View Other Picks</a></li>

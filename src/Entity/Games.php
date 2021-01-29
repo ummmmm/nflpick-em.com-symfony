@@ -20,27 +20,7 @@ class Games
     /**
      * @ORM\Column(type="integer")
      */
-    private $away_id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $home_id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $start;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $winner_id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $loser_id;
 
     /**
      * @ORM\Column(type="integer")
@@ -57,33 +37,27 @@ class Games
      */
     private $tied;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="away_games")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $away;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="home_games")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $home;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Weeks::class, inversedBy="games")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $week;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getAwayId(): ?int
-    {
-        return $this->away_id;
-    }
-
-    public function setAwayId(int $away_id): self
-    {
-        $this->away_id = $away_id;
-
-        return $this;
-    }
-
-    public function getHomeId(): ?int
-    {
-        return $this->home_id;
-    }
-
-    public function setHomeId(int $home_id): self
-    {
-        $this->home_id = $home_id;
-
-        return $this;
     }
 
     public function getStart(): ?int
@@ -94,30 +68,6 @@ class Games
     public function setStart(int $start): self
     {
         $this->start = $start;
-
-        return $this;
-    }
-
-    public function getWinnerId(): ?int
-    {
-        return $this->winner_id;
-    }
-
-    public function setWinnerId(int $winner_id): self
-    {
-        $this->winner_id = $winner_id;
-
-        return $this;
-    }
-
-    public function getLoserId(): ?int
-    {
-        return $this->loser_id;
-    }
-
-    public function setLoserId(int $loser_id): self
-    {
-        $this->loser_id = $loser_id;
 
         return $this;
     }
@@ -154,6 +104,42 @@ class Games
     public function setTied(bool $tied): self
     {
         $this->tied = $tied;
+
+        return $this;
+    }
+
+    public function getAway(): ?Teams
+    {
+        return $this->away;
+    }
+
+    public function setAway(?Teams $away): self
+    {
+        $this->away = $away;
+
+        return $this;
+    }
+
+    public function getHome(): ?Teams
+    {
+        return $this->home;
+    }
+
+    public function setHome(?Teams $home): self
+    {
+        $this->home = $home;
+
+        return $this;
+    }
+
+    public function getWeek(): ?Weeks
+    {
+        return $this->week;
+    }
+
+    public function setWeek(?Weeks $week): self
+    {
+        $this->week = $week;
 
         return $this;
     }
