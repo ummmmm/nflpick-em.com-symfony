@@ -252,4 +252,36 @@ class User implements UserInterface
 
         return $this;
     }
+
+    // Helper Functions
+
+	public function getOridinal(): ?string
+	{
+		$number	= $this->getCurrentPlace();
+		$mod10	= $number % 10;
+		$mod100 = $number % 100;
+
+		if ( $mod100 >= 11 && $mod100 <= 13 )
+		{
+			$s = "th";
+		}
+		else if ( $mod10 === 1 )
+		{
+			$s = "st";
+		}
+		else if ( $mod10 === 2 )
+		{
+			$s = "nd";
+		}
+		else if ( $mod10 === 3 )
+		{
+			$s = "rd";
+		}
+		else
+		{
+			$s = "th";
+		}
+
+		return $s;
+	}
 }

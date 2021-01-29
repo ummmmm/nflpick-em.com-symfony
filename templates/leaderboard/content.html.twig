@@ -6,6 +6,6 @@
 	<h1>Leaderboard</h1>
 
 	{% for user in users %}
-
+		<p>{{ user.currentPlace }}<sup>{{ user.getOridinal }}</sup> {{ user.name }} - {{ user.wins }} Wins - {{ user.losses }} Losses</p>
 	{% endfor %}
 {% endblock %}
