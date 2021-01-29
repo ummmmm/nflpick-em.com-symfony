@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Games;
 use App\Entity\Pick;
+use App\Entity\User;
 use App\Entity\Weeks;
 use App\Repository\GamesRepository;
 use App\Repository\PickRepository;
@@ -45,7 +46,7 @@ class JSONPickController extends JSONController
 	 */
 	public function makePick( Games $game, Request $request, EntityManagerInterface $entity_manager, PickRepository $pick_repository )
 	{
-		/** @var \App\Entity\User $user */
+		/** @var User $user */
 		$user		= $this->getUser();
 		$data		= json_decode( $request->getContent(), true );
 		$winner_id	= $data[ 'winner_id' ];

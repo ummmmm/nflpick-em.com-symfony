@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class JSONController extends AbstractController
 {
-	protected function json_success( $data )
+	protected function json_success( $data = null )
 	{
 		return $this->json( [ 'success' => true, 'data' => $data ] );
 	}

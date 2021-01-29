@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\News;
+use App\Entity\User;
 use App\Form\NewsType;
 use App\Repository\NewsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +21,7 @@ class NewsController extends AbstractController
 	 */
 	public function index( NewsRepository $news_repository )
 	{
-		$news = $news_repository->findAll( [], $orderBy = [ 'id' => 'DESC' ] );
+		$news = $news_repository->findBy( [], $orderBy = [ 'id' => 'DESC' ] );
 
 		return $this->render( 'admin/news/index.html.twig', [ 'news' => $news ] );
 	}
@@ -37,7 +38,7 @@ class NewsController extends AbstractController
 
 		if ( $form->isSubmitted() && $form->isValid() )
 		{
-			/** @var \App\Entity\User $user */
+			/** @var User $user */
 			$user = $this->getUser();
 
 			$news->setUser( $user );
@@ -65,7 +66,7 @@ class NewsController extends AbstractController
 
 		if ( $form->isSubmitted() && $form->isValid() )
 		{
-			/** @var \App\Entity\User $user */
+			/** @var User $user */
 			$user = $this->getUser();
 
 			$news->setUser( $user );
@@ -85,7 +86,7 @@ class NewsController extends AbstractController
 	/**
 	 * @Route( "/admin/news/{id}/delete", name="app_admin_news_delete", methods="POST" )
 	 */
-	public function delete( News $news, EntityManager $entity_manager )
+	public function delete( News $news, EntityManagerInterface $entity_manager )
 	{
 		$entity_manager->remove( $news );
 		$entity_manager->flush();
