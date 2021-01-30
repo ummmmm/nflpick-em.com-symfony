@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Week;
 use App\Factory\NewsFactory;
 use App\Factory\UserFactory;
+use App\Repository\TeamRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -12,10 +13,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AppFixtures extends Fixture
 {
 	private $encoder;
+	private $team_repository;
 
-	public function __construct( UserPasswordEncoderInterface $encoder )
+	public function __construct( UserPasswordEncoderInterface $encoder, TeamRepository $team_repository )
 	{
-		$this->encoder = $encoder;
+		$this->encoder			= $encoder;
+		$this->team_repository	= $team_repository;
 	}
 
     public function load(ObjectManager $manager)
@@ -26,7 +29,7 @@ class AppFixtures extends Fixture
     	NewsFactory::createMany( 5, [ 'user' => $admin_user ] );
 
     	/*
-    	 * Week
+    	 * Weeks
     	 */
 		$first_sunday = strtotime( 'First Sunday of September' );
 
@@ -38,6 +41,12 @@ class AppFixtures extends Fixture
 
 			$manager->persist( $week );
 		}
+
+    	/*
+    	 * Teams
+    	 */
+
+		$this->team_repository->insertAll();
 
     	$manager->flush();
     }

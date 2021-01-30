@@ -37,17 +37,17 @@ class Team
     /**
      * @ORM\Column(type="integer")
      */
-    private $wins;
+    private $wins = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $losses;
+    private $losses = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $ties;
+    private $ties = 0;
 
     /**
      * @ORM\OneToMany(targetEntity=Game::class, mappedBy="away")
