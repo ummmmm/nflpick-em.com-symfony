@@ -4,8 +4,8 @@
 namespace App\Controller\Admin;
 
 
-use App\Repository\GamesRepository;
-use App\Repository\WeeksRepository;
+use App\Repository\GameRepository;
+use App\Repository\WeekRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,7 +14,7 @@ class GamesController extends AbstractController
 	/**
 	 * @Route( "/admin/games", name="app_admin_games" )
 	 */
-	public function index( WeeksRepository $weeks_repository, GamesRepository $games_repository )
+	public function index(WeekRepository $weeks_repository, GameRepository $games_repository )
 	{
 		$weeks		= $weeks_repository->findBy( $orderBy = [ 'id' => 'ASC' ] );
 		$week_games	= array();

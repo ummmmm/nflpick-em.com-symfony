@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=WeeksRepository::class)
  */
-class Weeks
+class Week
 {
     /**
      * @ORM\Id
@@ -30,7 +30,7 @@ class Weeks
     private $locked;
 
     /**
-     * @ORM\OneToMany(targetEntity=Games::class, mappedBy="week")
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="week")
      */
     private $games;
 
@@ -69,14 +69,14 @@ class Weeks
     }
 
     /**
-     * @return Collection|Games[]
+     * @return Collection|Game[]
      */
     public function getGames(): Collection
     {
         return $this->games;
     }
 
-    public function addGame(Games $game): self
+    public function addGame(Game $game): self
     {
         if (!$this->games->contains($game)) {
             $this->games[] = $game;
@@ -86,7 +86,7 @@ class Weeks
         return $this;
     }
 
-    public function removeGame(Games $game): self
+    public function removeGame(Game $game): self
     {
         if ($this->games->removeElement($game)) {
             // set the owning side to null (unless already changed)

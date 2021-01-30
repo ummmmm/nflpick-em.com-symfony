@@ -24,19 +24,19 @@ class Pick
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Games::class)
+     * @ORM\ManyToOne(targetEntity=Game::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $game;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Teams::class)
+     * @ORM\ManyToOne(targetEntity=Team::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $winner;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Teams::class)
+     * @ORM\ManyToOne(targetEntity=Team::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $loser;
@@ -47,7 +47,7 @@ class Pick
     private $ip;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Weeks::class)
+     * @ORM\ManyToOne(targetEntity=Week::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $week;
@@ -69,36 +69,36 @@ class Pick
         return $this;
     }
 
-    public function getGame(): ?Games
+    public function getGame(): ?Game
     {
         return $this->game;
     }
 
-    public function setGame(?Games $game): self
+    public function setGame(?Game $game): self
     {
         $this->game = $game;
 
         return $this;
     }
 
-    public function getWinner(): ?Teams
+    public function getWinner(): ?Team
     {
         return $this->winner;
     }
 
-    public function setWinner(?Teams $winner): self
+    public function setWinner(?Team $winner): self
     {
         $this->winner = $winner;
 
         return $this;
     }
 
-    public function getLoser(): ?Teams
+    public function getLoser(): ?Team
     {
         return $this->loser;
     }
 
-    public function setLoser(?Teams $loser): self
+    public function setLoser(?Team $loser): self
     {
         $this->loser = $loser;
 
@@ -117,12 +117,12 @@ class Pick
         return $this;
     }
 
-    public function getWeek(): ?Weeks
+    public function getWeek(): ?Week
     {
         return $this->week;
     }
 
-    public function setWeek(?Weeks $week): self
+    public function setWeek(?Week $week): self
     {
         $this->week = $week;
 

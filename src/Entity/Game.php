@@ -6,9 +6,9 @@ use App\Repository\GamesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=GamesRepository::class)
+ * @ORM\Entity(repositoryClass=GameRepository::class)
  */
-class Games
+class Game
 {
     /**
      * @ORM\Id
@@ -38,19 +38,19 @@ class Games
     private $tied;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="away_games")
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="away_games")
      * @ORM\JoinColumn(nullable=false)
      */
     private $away;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Teams::class, inversedBy="home_games")
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="home_games")
      * @ORM\JoinColumn(nullable=false)
      */
     private $home;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Weeks::class, inversedBy="games")
+     * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="games")
      * @ORM\JoinColumn(nullable=false)
      */
     private $week;
@@ -108,36 +108,36 @@ class Games
         return $this;
     }
 
-    public function getAway(): ?Teams
+    public function getAway(): ?Team
     {
         return $this->away;
     }
 
-    public function setAway(?Teams $away): self
+    public function setAway(?Team $away): self
     {
         $this->away = $away;
 
         return $this;
     }
 
-    public function getHome(): ?Teams
+    public function getHome(): ?Team
     {
         return $this->home;
     }
 
-    public function setHome(?Teams $home): self
+    public function setHome(?Team $home): self
     {
         $this->home = $home;
 
         return $this;
     }
 
-    public function getWeek(): ?Weeks
+    public function getWeek(): ?Week
     {
         return $this->week;
     }
 
-    public function setWeek(?Weeks $week): self
+    public function setWeek(?Week $week): self
     {
         $this->week = $week;
 

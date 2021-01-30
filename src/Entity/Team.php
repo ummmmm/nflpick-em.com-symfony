@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\TeamsRepository;
+use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=TeamsRepository::class)
  */
-class Teams
+class Team
 {
     /**
      * @ORM\Id
@@ -50,12 +50,12 @@ class Teams
     private $ties;
 
     /**
-     * @ORM\OneToMany(targetEntity=Games::class, mappedBy="away")
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="away")
      */
     private $away_games;
 
     /**
-     * @ORM\OneToMany(targetEntity=Games::class, mappedBy="home")
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="home")
      */
     private $home_games;
 
@@ -143,14 +143,14 @@ class Teams
     }
 
     /**
-     * @return Collection|Games[]
+     * @return Collection|Game[]
      */
     public function getAwayGames(): Collection
     {
         return $this->away_games;
     }
 
-    public function addAwayGame(Games $awayGame): self
+    public function addAwayGame(Game $awayGame): self
     {
         if (!$this->away_games->contains($awayGame)) {
             $this->away_games[] = $awayGame;
@@ -160,7 +160,7 @@ class Teams
         return $this;
     }
 
-    public function removeAwayGame(Games $awayGame): self
+    public function removeAwayGame(Game $awayGame): self
     {
         if ($this->away_games->removeElement($awayGame)) {
             // set the owning side to null (unless already changed)
@@ -173,14 +173,14 @@ class Teams
     }
 
     /**
-     * @return Collection|Games[]
+     * @return Collection|Game[]
      */
     public function getHomeGames(): Collection
     {
         return $this->home_games;
     }
 
-    public function addHomeGame(Games $homeGame): self
+    public function addHomeGame(Game $homeGame): self
     {
         if (!$this->home_games->contains($homeGame)) {
             $this->home_games[] = $homeGame;
@@ -190,7 +190,7 @@ class Teams
         return $this;
     }
 
-    public function removeHomeGame(Games $homeGame): self
+    public function removeHomeGame(Game $homeGame): self
     {
         if ($this->home_games->removeElement($homeGame)) {
             // set the owning side to null (unless already changed)

@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Weeks;
+use App\Entity\Week;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Weeks|null find($id, $lockMode = null, $lockVersion = null)
- * @method Weeks|null findOneBy(array $criteria, array $orderBy = null)
- * @method Weeks[]    findAll()
- * @method Weeks[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Week|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Week|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Week[]    findAll()
+ * @method Week[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WeeksRepository extends ServiceEntityRepository
+class WeekRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Weeks::class);
+        parent::__construct($registry, Week::class);
     }
 
     // /**
-    //  * @return Weeks[] Returns an array of Weeks objects
+    //  * @return Week[] Returns an array of Week objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class WeeksRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Weeks
+    public function findOneBySomeField($value): ?Week
     {
         return $this->createQueryBuilder('w')
             ->andWhere('w.exampleField = :val')

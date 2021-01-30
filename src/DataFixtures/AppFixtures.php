@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Weeks;
+use App\Entity\Week;
 use App\Factory\NewsFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -26,13 +26,13 @@ class AppFixtures extends Fixture
     	NewsFactory::createMany( 5, [ 'user' => $admin_user ] );
 
     	/*
-    	 * Weeks
+    	 * Week
     	 */
 		$first_sunday = strtotime( 'First Sunday of September' );
 
     	for ( $i = 0; $i < 17; $i++ )
 		{
-			$week = new Weeks();
+			$week = new Week();
 			$week->setDate( $first_sunday + ( $i * 60 * 60 * 24 * 7 ) );
 			$week->setLocked( false );
 

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Games;
+use App\Entity\Game;
 use App\Entity\Pick;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,7 +21,7 @@ class PickRepository extends ServiceEntityRepository
         parent::__construct($registry, Pick::class);
     }
 
-    public function findOnePickByUserGame( User $user, Games $game ): ?Pick
+    public function findOnePickByUserGame(User $user, Game $game ): ?Pick
 	{
 		return $this->createQueryBuilder( 'p' )
 			->andWhere( 'p.user = :user' )

@@ -4,11 +4,11 @@
 namespace App\Controller;
 
 
-use App\Entity\Games;
+use App\Entity\Game;
 use App\Entity\Pick;
 use App\Entity\User;
-use App\Entity\Weeks;
-use App\Repository\GamesRepository;
+use App\Entity\Week;
+use App\Repository\GameRepository;
 use App\Repository\PickRepository;
 use App\Repository\WeeksRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +21,7 @@ class PickController extends AbstractController
 	/**
 	 * @Route( "/picks", name="app_picks" )
 	 */
-	public function index(WeeksRepository $weeks_repository)
+	public function index(WeekRepository $weeks_repository)
 	{
 		$weeks = $weeks_repository->findBy([], $orderBy = ['id' => 'ASC']);
 
@@ -31,7 +31,7 @@ class PickController extends AbstractController
 	/**
 	 * @Route( "/picks/week/{id}", name="app_picks_week" )
 	 */
-	public function weekList(Weeks $week, GamesRepository $game_repository)
+	public function weekList(Week $week, GameRepository $game_repository)
 	{
 		$games = $game_repository->findBy(['week' => $week], ['start' => 'ASC']);
 
@@ -44,7 +44,7 @@ class JSONPickController extends JSONController
 	/**
 	 * @Route( "/picks/game/{id}", name="app_picks_game", methods="POST" )
 	 */
-	public function makePick( Games $game, Request $request, EntityManagerInterface $entity_manager, PickRepository $pick_repository )
+	public function makePick(Game $game, Request $request, EntityManagerInterface $entity_manager, PickRepository $pick_repository )
 	{
 		/** @var User $user */
 		$user		= $this->getUser();
