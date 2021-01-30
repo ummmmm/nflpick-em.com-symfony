@@ -16,7 +16,7 @@ class HomeController extends AbstractController
 	 */
     public function index( NewsRepository $news_repository ): Response
 	{
-		$news = $news_repository->findBy( [], [ 'id' => 'DESC' ], 3 );
+		$news = $news_repository->findBy( [], [ 'id' => 'DESC' ] );
 
     	return $this->render( 'homepage/content.html.twig', [ 'news' => $news ] );
     }

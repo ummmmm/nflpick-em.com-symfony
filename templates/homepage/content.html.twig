@@ -1,7 +1,7 @@
 {% extends'base.html.twig' %}
 
 {% block content %}
-	{% for entry in news %}
+	{% for entry in news|slice( 0, 3 ) %}
 		<h1>{{ entry.title }}</h1>
 		<div class="descr">
 			{{ entry.postDt|date( "M d, Y") }} by {{ entry.user.getname }}
