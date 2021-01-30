@@ -36,6 +36,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findByLastOnlineWithin( int $minutes )
+	{
+		return $this->createQueryBuilder( 'u' )
+			->andWhere( 'u.last_on_dt > :last_online' )
+			->setParameter( ':last_online', time() - ( 60 * $minutes ) )
+			->orderBy( 'u.last_on_dt', 'DESC' )
+			->getQuery()
+			->getResult();
+	}
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

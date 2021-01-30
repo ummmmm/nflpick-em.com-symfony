@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Online Users{% endblock %}
+
+{% block content %}
+    <h1>Online Users - Last {{ minutes_threshold }} Minutes</h1>
+
+    {% for online_user in online_users %}
+        <p>{{ online_user.name }} - Last active on {{ online_user.lastOnDt|date( 'D F d, Y' ) }} at {{ online_user.lastOnDt|date( 'h:i A T' ) }}</p>
+    {% endfor %}
+{% endblock %}

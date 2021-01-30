@@ -1,13 +1,4 @@
-{% if not is_granted( 'IS_AUTHENTICATED_FULLY' ) %}
-	<h1>Quick Links</h1>
-	<ul>
-		<li><a href="{{ path( 'app_register' ) }}" title="Register">Register</a></li>
-		<li><a href="{{ path( 'app_login' ) }}" title="Login">Login</a></li>
-		<li><a href="" title="Scheduled">Schedule</a></li>
-		<li><a href="{{ path( 'app_contact' ) }}" title="Contact">Contact Us</a></li>
-		<li><a href="" title="Online Users">Online Users</a></li>
-	</ul>
-{% else %}
+{% if is_granted( 'IS_AUTHENTICATED_FULLY' ) %}
 	<h1>User Links</h1>
 	<ul>
 		<li><a href="{{ path( 'app_homepage' ) }}" title="Home">Home Page</a></li>
@@ -16,9 +7,20 @@
 			<li><a href="{{ path( 'app_admin') }}" title="Admin Control Panel">Admin Control Panel</a></li>
 		{% endif %}
 		<li><a href="" title="Make Picks">Make Picks</a></li>
-		<li><a href="" title="View Other Picks">View Other Picks</a></li>
-		<li><a href="" title="Weekly Records">Weekly Records</a></li>
-		<li><a href="{{ path( 'app_leaderboard' ) }}" title="Leaderboard">Leaderboard</a></li>
+		<li><a href="" title="View Other Picks">View Other's Picks</a></li>
+		<li><a href="" title="Weekly Records">View Weekly Records</a></li>
+		<li><a href="{{ path( 'app_leaderboard' ) }}" title="Leader Board">View Leader Board</a></li>
 		<li><a href="{{ path( 'app_logout' ) }}" title="Logout" id="logout">Logout</a></li>
 	</ul>
 {% endif %}
+
+<h1>Quick Links</h1>
+<ul>
+	{% if not is_granted( 'IS_AUTHENTICATED_FULLY' ) %}
+		<li><a href="{{ path( 'app_register' ) }}" title="Register">Register</a></li>
+		<li><a href="{{ path( 'app_login' ) }}" title="Login">Login</a></li>
+	{% endif %}
+	<li><a href="" title="Scheduled">Schedule</a></li>
+	<li><a href="{{ path( 'app_contact' ) }}" title="Contact">Contact Us</a></li>
+	<li><a href="{{ path( 'app_online' ) }}" title="Online Users">Online Users</a></li>
+</ul>

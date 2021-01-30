@@ -74,6 +74,11 @@ class User implements UserInterface
      */
     private $message;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $last_on_dt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -255,7 +260,7 @@ class User implements UserInterface
 
     // Helper Functions
 
-	public function getOridinal(): ?string
+	public function getOrdinal(): ?string
 	{
 		$number	= $this->getCurrentPlace();
 		$mod10	= $number % 10;
@@ -284,4 +289,16 @@ class User implements UserInterface
 
 		return $s;
 	}
+
+    public function getLastOnDt(): ?int
+    {
+        return $this->last_on_dt;
+    }
+
+    public function setLastOnDt(int $last_on_dt): self
+    {
+        $this->last_on_dt = $last_on_dt;
+
+        return $this;
+    }
 }

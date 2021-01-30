@@ -1,5 +1,5 @@
 {% if not is_granted( 'IS_AUTHENTICATED_FULLY' ) %}
 	Welcome, Guest. Please login to start making your picks for week 1.
 {% else %}
-	Welcome, {{ app.user.firstname }} {{ app.user.lastname }}! You have {{ app.user.wins }} wins and {{ app.user.losses }} losses and are currently in {{ app.user.currentPlace }}<sup>{{ app.user.getOridinal }}</sup> place.
+	Welcome, {{ app.user.firstname }} {{ app.user.lastname }}! You have {{ app.user.wins }} wins and {{ app.user.losses }} losses and are currently in {{ app.user.currentPlace }}<sup>{{ app.user.getOrdinal }}</sup> place.
 {% endif %}

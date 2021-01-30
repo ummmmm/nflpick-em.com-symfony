@@ -44,7 +44,8 @@ final class UserFactory extends ModelFactory
 			'paid'			=> self::faker()->boolean,
 			'current_place'	=> self::faker()->numberBetween( 1, 30 ),
 			'active'		=> self::faker()->boolean,
-			'message'		=> ''
+			'message'		=> '',
+			'last_on_dt'	=> time() - ( 60 * self::faker()->numberBetween( 0, 100 ) )
 		];
     }
 
