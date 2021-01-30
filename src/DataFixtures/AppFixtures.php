@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
+use App\Entity\Weeks;
+use App\Factory\NewsFactory;
+use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -18,20 +20,25 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-    	$user = new User();
-    	$user->setFirstname( 'Bob' );
-    	$user->setLastname( 'Barker' );
-    	$user->setEmail( 'bbarker@example.com' );
-    	$user->setPassword( '$2y$13$M9jIMvn42iZndTx0TUsHje9oEnBKAQUcXG6zgFDjEsiRt9vwzg/UC' );
-    	$user->setWins( 0 );
-    	$user->setLosses( 0 );
-    	$user->setPaid( true );
-    	$user->setCurrentPlace( 1 );
-    	$user->setActive( true );
-    	$user->setMessage( '' );
-    	$user->setRoles( [ 'ROLE_ADMIN' ] );
+    	$admin_user = UserFactory::createOne( [ 'first_name' => 'Bob', 'last_name' => 'Barker', 'email' => 'bbarker@example.com', 'password' => 'P@ssw0rd', 'roles' => [ 'ROLE_ADMIN' ], 'active' => true ] );
+    	UserFactory::createMany( 5 );
 
-    	$manager->persist( $user );
-        $manager->flush();
+    	NewsFactory::createMany( 5, [ 'user' => $admin_user ] );
+
+    	/*
+    	 * Weeks
+    	 */
+		$first_sunday = strtotime( 'First Sunday of September' );
+
+    	for ( $i = 0; $i < 17; $i++ )
+		{
+			$week = new Weeks();
+			$week->setDate( $first_sunday + ( $i * 60 * 60 * 24 * 7 ) );
+			$week->setLocked( false );
+
+			$manager->persist( $week );
+		}
+
+    	$manager->flush();
     }
 }
