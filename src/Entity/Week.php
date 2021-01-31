@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\WeeksRepository;
+use App\Repository\WeekRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=WeeksRepository::class)
+ * @ORM\Entity(repositoryClass=WeekRepository::class)
  */
 class Week
 {
