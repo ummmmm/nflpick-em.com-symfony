@@ -31,12 +31,12 @@ class PicksController extends JSONController
 		if ( ( $winner_id != $home_team->getId() && $winner_id != $away_team->getId() ) ||
 			( $loser_id != $home_team->getId() && $loser_id != $away_team->getId() ) )
 		{
-			return $this->json_failure( '#Error#', 'Invalid game data' );
+			return $this->jsonFailure( '#Error#', 'Invalid game data' );
 		}
 
 		if ( time() > $game->getStart() )
 		{
-			return $this->json_failure( '#Error#', 'This game has already started and can no longer be updated' );
+			return $this->jsonFailure( '#Error#', 'This game has already started and can no longer be updated' );
 		}
 
 		if ( ( $pick = $pick_repository->findOnePickByUserGame( $user, $game ) ) === null )
@@ -53,6 +53,6 @@ class PicksController extends JSONController
 		$entity_manager->persist( $pick );
 		$entity_manager->flush();
 
-		return $this->json_success();
+		return $this->jsonSuccess();
 	}
 }
