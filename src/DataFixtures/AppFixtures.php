@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Game;
 use App\Entity\Week;
 use App\Factory\NewsFactory;
 use App\Factory\UserFactory;
@@ -31,8 +32,8 @@ class AppFixtures extends Fixture
     	/*
     	 * Weeks
     	 */
-		$first_sunday = strtotime( 'First Sunday of September' );
-
+		$first_sunday	= strtotime( 'First Sunday of September' );
+		$weeks			= array();
     	for ( $i = 0; $i < 17; $i++ )
 		{
 			$week = new Week();
@@ -40,14 +41,32 @@ class AppFixtures extends Fixture
 			$week->setLocked( false );
 
 			$manager->persist( $week );
+
+			array_push( $weeks, $week );
 		}
 
     	/*
     	 * Teams
     	 */
-
 		$this->team_repository->insertAll();
 
+		$teams = $this->team_repository->findAll();
+		for ( $i = 0; $i < 17; $i++ )
+		{
+			$teams_copy = $teams;
+			shuffle( $teams_copy );
+
+			while ( count( $teams_copy ) > 0 )
+			{
+				$game = new Game();
+				$game->setAway( array_pop( $teams_copy ) );
+				$game->setHome( array_pop( $teams_copy ) );
+				$game->setWeek( $weeks[ $i ] );
+				$game->setStart( time() );
+
+				$manager->persist( $game );
+			}
+		}
     	$manager->flush();
     }
 }
