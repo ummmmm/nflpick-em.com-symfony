@@ -25,17 +25,17 @@ class Game
     /**
      * @ORM\Column(type="integer")
      */
-    private $home_score;
+    private $home_score = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $away_score;
+    private $away_score = 0;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $tied;
+    private $tied = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="away_games")
