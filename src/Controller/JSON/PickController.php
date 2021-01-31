@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PicksController extends JSONController
+class PickController extends JSONController
 {
 	/**
 	 * @Route( "/picks/game/{id}", name="app_picks_game", methods="POST" )
