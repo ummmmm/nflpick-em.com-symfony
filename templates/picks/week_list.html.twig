@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <script type="text/javascript">$( document ).ready( function() { $.fn.load_picks( {{ week.id }} ); } );</script>
+{% endblock %}
 {% block content %}
-
+    <h1>Notes</h1>
+    <p><b>Left</b> team is the visiting team. <b>Right</b> team is the home team. <br />
+        - Games in light red you have yet to pick who you want. <br />
+        - Games in light yellow you have chosen who you want. <br />
+        - Games in light grey have already been played, and you can no longer change. <br />
+    <div id="picks_loading">Loading...</div>
 {% endblock %}
