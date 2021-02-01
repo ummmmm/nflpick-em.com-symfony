@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Game;
+use App\Entity\Week;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,6 +19,25 @@ class GameRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Game::class);
     }
+
+    public function findAllByWeekOrderByStart( Week $week )
+	{
+		$entityManager = $this->getEntityManager();
+
+		$query = $entityManager->createQuery(
+			'SELECT
+				g, t_home, t_away
+			 FROM App\Entity\Game g
+				INNER JOIN g.home t_home
+				INNER JOIN g.away t_away
+			 WHERE
+				g.week = :week
+			 ORDER BY
+				g.start'
+		)->setParameter( 'week', $week );
+
+		return $query->getArrayResult();
+	}
 
     // /**
     //  * @return Game[] Returns an array of Game objects

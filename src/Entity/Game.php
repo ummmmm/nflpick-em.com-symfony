@@ -143,4 +143,11 @@ class Game
 
         return $this;
     }
+
+    // Helper Functions
+
+	public function isFinal(): bool
+	{
+		return $this->getTied() == 1 || $this->getHomeScore() != $this->getAwayScore();
+	}
 }

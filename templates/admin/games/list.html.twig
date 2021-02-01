@@ -4,7 +4,9 @@
 
 {% block content %}
 	<h1>Games</h1>
-	{% for week_id, games in week_games %}
-
+	{% for entry in entries %}
+		<p>
+			<a href="{{ path( 'app_admin_games_week', { 'id': entry[ 'week' ].id } ) }}">Week {{ entry[ 'week' ].id }}</a> - {{ entry[ 'finals' ] }}/{{ entry[ 'games' ]|length }} Final
+		</p>
 	{% endfor %}
 {% endblock %}

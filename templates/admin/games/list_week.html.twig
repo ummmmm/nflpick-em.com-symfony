@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Games for Week {{ week.id }}</h1>
+
+    {% for game in games %}
+        <p>
+            <a href="{{ path( 'app_admin_game_edit', { 'id': game.id } ) }}">{{ game.away.name }} vs. {{ game.home.name }}</a> - {{ game.start|date( 'D M j, Y g:i A' ) }}
+        </p>
+    {% endfor %}
+{% endblock %}
