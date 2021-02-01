@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Week;
 use App\Factory\GameFactory;
 use App\Factory\NewsFactory;
+use App\Factory\PickFactory;
 use App\Factory\UserFactory;
 use App\Factory\WeekFactory;
 use App\Repository\TeamRepository;
@@ -25,9 +26,15 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+    	/*
+    	 * Users
+    	 */
     	$admin_user = UserFactory::createOne( [ 'first_name' => 'Bob', 'last_name' => 'Barker', 'email' => 'bbarker@example.com', 'roles' => [ 'ROLE_ADMIN' ], 'active' => true ] );
-    	UserFactory::createMany( 5 );
+    	UserFactory::createMany( 30 );
 
+    	/*
+    	 * News
+    	 */
     	NewsFactory::createMany( 5, [ 'user' => $admin_user ] );
 
 		/*
@@ -54,6 +61,23 @@ class AppFixtures extends Fixture
 					->week( $week->object() )
 					->awayTeam( array_pop( $teams_copy ) )
 					->homeTeam( array_pop( $teams_copy ) )
+					->create();
+			}
+		}
+
+		/*
+		 * Picks
+		 */
+		$users = UserFactory::randomSet( 5 );
+		$games = GameFactory::randomSet( 50 );
+
+		foreach ( $users as $user )
+		{
+			foreach ( $games as $game )
+			{
+				PickFactory::new()
+					->user( $user->object() )
+					->game( $game->object() )
 					->create();
 			}
 		}
