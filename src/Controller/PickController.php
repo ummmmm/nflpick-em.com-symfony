@@ -10,7 +10,7 @@ use App\Entity\User;
 use App\Entity\Week;
 use App\Repository\GameRepository;
 use App\Repository\PickRepository;
-use App\Repository\WeeksRepository;
+use App\Repository\WeekRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
