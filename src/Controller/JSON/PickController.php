@@ -8,6 +8,8 @@ use App\Controller\JSONController;
 use App\Entity\Game;
 use App\Entity\Pick;
 use App\Entity\User;
+use App\Entity\Week;
+use App\Repository\GameRepository;
 use App\Repository\PickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,5 +56,14 @@ class PickController extends JSONController
 		$entity_manager->flush();
 
 		return $this->jsonSuccess();
+	}
+
+	/**
+	 * @Route( "/picks/week/{id}/load", name="app_picks_week_load" )
+	 */
+	public function loadPicksByWeek( Week $week, GameRepository $gameRepository )
+	{
+		$games = $gameRepository->findBy( [ 'week' => $week ], [ 'start' => 'ASC' ] );
+		return $this->jsonSuccess( $games );
 	}
 }
