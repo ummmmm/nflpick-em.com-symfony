@@ -34,7 +34,7 @@ final class NewsFactory extends ModelFactory
             'title' 	=> self::faker()->realText( 20 ),
 			'data'		=> self::faker()->paragraphs( self::faker()->numberBetween( 1, 4 ), true ),
 			'post_dt'	=> self::faker()->unixTime(),
-			'ip'		=> self::faker()->ipv4(),
+			'ip'		=> self::faker()->boolean ? self::faker()->ipv4 : self::faker()->ipv6,
 			'active'	=> self::faker()->boolean
         ];
     }
