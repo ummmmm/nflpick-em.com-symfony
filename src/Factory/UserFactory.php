@@ -4,7 +4,6 @@ namespace App\Factory;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -22,13 +21,11 @@ use Zenstruck\Foundry\Proxy;
  */
 final class UserFactory extends ModelFactory
 {
-	private $encoder;
+	public const USER_PASSWORD = 'P@ssw0rd'; // pre-hashed password
 
-    public function __construct( UserPasswordEncoderInterface $encoder )
+    public function __construct()
     {
         parent::__construct();
-
-        $this->encoder = $encoder;
     }
 
     protected function getDefaults(): array
@@ -36,7 +33,7 @@ final class UserFactory extends ModelFactory
         return [
             'email'			=> self::faker()->unique()->safeEmail,
 			'roles'			=> [ 'ROLE_USER' ],
-			'password'		=> self::faker()->password,
+			'password'		=> '$2y$13$6sxRnWrAreXSMbozTsLKP.5rg.qCcLDDEYeatuZ2Z4fHbeUYLgV8',
 			'first_name'	=> self::faker()->firstName,
 			'last_name'		=> self::faker()->lastName,
 			'wins'			=> self::faker()->numberBetween( 0, 100 ),
@@ -51,12 +48,10 @@ final class UserFactory extends ModelFactory
 
     protected function initialize(): self
     {
-        // see https://github.com/zenstruck/foundry#initialization
-        return $this
-             ->afterInstantiate( function( User $user ) {
-             	$user->setPassword( $this->encoder->encodePassword( $user, $user->getPassword() ) );
-			 } )
-        ;
+		// see https://github.com/zenstruck/foundry#initialization
+		return $this
+			// ->afterInstantiate(function(News $news) {})
+			;
     }
 
     protected static function getClass(): string
