@@ -19,6 +19,11 @@ class WeekRepository extends ServiceEntityRepository
         parent::__construct($registry, Week::class);
     }
 
+    public function findAllOrderByWeek()
+	{
+		return $this->findBy( [], [ 'id' => 'ASC' ] );
+	}
+
     // /**
     //  * @return Week[] Returns an array of Week objects
     //  */

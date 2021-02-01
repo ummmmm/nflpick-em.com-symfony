@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Weeks{% endblock %}
+
+{% block content %}
+    <h1>Weeks</h1>
+    {% for week in weeks %}
+        <fieldset>
+            <legend>Week {{ week.id }}</legend>
+            <div>Status: {{ week.locked ? 'Locked' : 'Unlocked' }}</div>
+            <div>Date: {{ week.date|date( 'm/d/y' ) }} at {{ week.date|date( 'h:i a' ) }}</div>
+        </fieldset>
+    {% endfor %}
+{% endblock %}
