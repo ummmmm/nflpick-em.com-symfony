@@ -4,10 +4,12 @@
 namespace App\Controller;
 
 
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class JSONController
+class JSONController extends AbstractController
 {
 	private $serializer;
 
@@ -18,11 +20,19 @@ class JSONController
 
 	protected function jsonSuccess( $data = null )
 	{
-		return new JsonResponse( $this->serializer->serialize( [ 'success' => true, 'data' => $data ], 'json' ), 200, [], true );
+		return $this->jsonLowLevel( [ 'success' => true, 'data' => $data ] );
 	}
 
 	protected function jsonFailure( string $error_code, string $error_message )
 	{
-		return new JsonResponse( $this->serializer->serialize( [ 'success' => false, 'error_code' => $error_code, 'error_message' => $error_message ], 'json' ), 200, [], true );
+		return $this->jsonLowLevel( [ 'success' => false, 'error_code' => $error_code, 'error_message' => $error_message ] );
+	}
+
+	private function jsonLowLevel( $data, $status = 200, $headers = [] )
+	{
+		$context = new SerializationContext();
+		$context->setSerializeNull( true );
+
+		return new JsonResponse( $this->serializer->serialize( $data, 'json', $context ), 200, [], true );
 	}
 }
