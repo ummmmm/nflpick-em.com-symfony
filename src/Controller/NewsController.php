@@ -20,6 +20,6 @@ class NewsController extends AbstractController
 	{
 		$news = $news_repository->findBy( [], [ 'id' => 'DESC' ] );
 
-		return $this->render( 'news/content.html.twig', [ 'news' => $news ] );
+		return $this->render( 'news/content.html.twig', [ 'news' => $news, 'limited' => false ] );
 	}
 }

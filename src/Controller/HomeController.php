@@ -18,6 +18,6 @@ class HomeController extends AbstractController
 	{
 		$news = $news_repository->findBy( [], [ 'id' => 'DESC' ] );
 
-    	return $this->render( 'homepage/content.html.twig', [ 'news' => $news ] );
+    	return $this->render( 'news/content.html.twig', [ 'news' => $news, 'limited' => true ] );
     }
 }
