@@ -38,19 +38,19 @@ class Game
     private $tied = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="away_games")
+     * @ORM\ManyToOne(targetEntity=Team::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $away;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="home_games")
+     * @ORM\ManyToOne(targetEntity=Team::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $home;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="games")
+     * @ORM\ManyToOne(targetEntity=Week::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $week;
