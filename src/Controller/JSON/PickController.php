@@ -61,9 +61,21 @@ class PickController extends JSONController
 	/**
 	 * @Route( "/picks/week/{id}/load", name="app_picks_week_load" )
 	 */
-	public function loadPicksByWeek( Week $week, GameRepository $gameRepository )
+	public function loadPicksByWeek( Week $week, GameRepository $gameRepository, PickRepository $pickRepository)
 	{
-		$games = $gameRepository->findBy( [ 'week' => $week ], [ 'start' => 'ASC' ] );
-		return $this->jsonSuccess( $games );
+		$user					= $this->getUser();
+		$response				= array();
+		$response[ 'week' ]		= $week;
+		$response[ 'games' ]	= array();
+		$games					= $gameRepository->findBy( [ 'week' => $week ], [ 'start' => 'ASC' ] );
+
+		foreach ( $games as $game )
+		{
+			$pick = $pickRepository->findOnePickByUserGame( $user, $game );
+
+			array_push( $response[ 'games' ], array( 'game' => $game, 'pick' => $pick ) );
+		}
+
+		return $this->jsonSuccess( $response );
 	}
 }

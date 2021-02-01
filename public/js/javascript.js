@@ -1,13 +1,11 @@
 $( document ).ready( function(){
-	$.fn.json = function( action, variables, callback )
+	$.fn.json = function( path, data, callback )
 	{
-		var data = 'action=' + encodeURIComponent( action ) + ( variables == '' ? '' : '&' ) + variables;
-
 		$.ajax( {
 			type	: 'POST',
-			url		: 'json.php',
-			dataType: 'JSON',
-			data	:  'token=' + token + '&' + data,
+			url		: path,
+			processData: false,
+			data	: JSON.stringify( data ),
 			success	: function( response, status )
 			{
 				callback( response );
@@ -18,7 +16,6 @@ $( document ).ready( function(){
 				response.success		= 0;
 				response.error_code		= '#Error#';
 				response.error_message	= 'The server returned an invalid response.\n' +
-										  'Action: ' + action + '\n' +
 										  'Response: ' + jqXHR.responseText;
 
 				if ( textStatus != 'error' )
@@ -84,7 +81,7 @@ $( document ).ready( function(){
 
 	$.fn.load_picks = function( week_id )
 	{
-		$.fn.json( 'LoadPicks', 'week_id=' + encodeURIComponent( week_id ), function( response )
+		$.fn.json( '/picks/week/' + week_id + '/load', null , function( response )
 		{
 			if ( !response.success )
 			{
@@ -95,9 +92,9 @@ $( document ).ready( function(){
 			var div		= $( '#picks_loading' ).text( '' );
 			var days	= new Array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
 
-			$.each( week.games, function( key, game )
+			$.each( response.data.games, function( key, record )
 			{
-				var game_date = new Date( game.date_javascript );
+				var game_date = new Date( record.game.start );
 
 				if ( $( '#day_' + days[ game_date.getDay() ] ).length == 0 )
 				{
@@ -109,39 +106,39 @@ $( document ).ready( function(){
 
 					$( '<span/>', {
 						'class'	: 'picks_date',
-						'text'	: game.date_formatted
+						'text'	: record.game.date_formatted
 					} ).appendTo( div );
 				}
 
-				var past		= ( week.locked || game.past ) ? true : false;
-				var pick_class 	= ( past ) ? 'past' : ( ( game.pick.picked ) ? 'made' : 'notMade' );
-				var pick 		= $( '<div/>', { 'id': 'picks' + game.id, 'class': 'make_picks ' + pick_class } );
-				var status		= $( '<div/>', { 'id': 'status' + game.id } );
+				var past		= ( week.locked || record.game.past ) ? true : false;
+				var pick_class 	= ( past ) ? 'past' : ( ( record.pick === null ) ? 'notMade' : 'made' );
+				var pick 		= $( '<div/>', { 'id': 'picks' + record.game.id, 'class': 'make_picks ' + pick_class } );
+				var status		= $( '<div/>', { 'id': 'status' + record.game.id } );
 
 				if ( past )
 				{
-					pick.append( game.awayTeam );
+					pick.append( record.game.away.name );
 				} else {
-					$.fn.picks_build_link( game.awayTeam, week.id, game.id, game.away, game.home ).appendTo( pick );
+					$.fn.picks_build_link( record.game.away.name, week.id, record.game.id, record.game.away, record.game.home ).appendTo( pick );
 				}
 
-				$.fn.picks_build_record( game.awayWins, game.awayLosses, game.awayTies ).appendTo( pick );
+				$.fn.picks_build_record( record.game.away.wins, record.game.away.losses, record.game.away.ties ).appendTo( pick );
 				$( '<b/>', { 'text': ' vs. ' } ).appendTo( pick );
 
 				if ( past )
 				{
-					pick.append( game.homeTeam );
+					pick.append( record.game.home.name );
 				} else {
-					$.fn.picks_build_link( game.homeTeam, week.id, game.id, game.home, game.away ).appendTo( pick );
+					$.fn.picks_build_link( record.game.home.name, week.id, record.game.id, record.game.home.id, record.game.away.id ).appendTo( pick );
 				}
 
-				$.fn.picks_build_record( game.homeWins, game.homeLosses, game.homeTies ).appendTo( pick );
-				pick.append( '<br />' + game.stadium + ' - ' + game.time_formatted );
+				$.fn.picks_build_record( record.game.home.wins, record.game.home.losses, record.game.home.ties ).appendTo( pick );
+				pick.append( '<br />' + record.game.home.stadium + ' - ' + record.game.time_formatted );
 
-				if ( game.pick.picked )
+				if ( record.game.pick != null )
 				{
-					var winner 	= ( game.pick.winner_pick == game.home ) ? game.homeTeam : game.awayTeam;
-					var loser	= ( game.pick.loser_pick == game.home ) ? game.homeTeam : game.awayTeam;
+					var winner 	= ( record.pick.winner_pick == record.game.home.id ) ? record.game.home.name : record.game.away.name;
+					var loser	= ( record.pick.loser_pick == record.game.home.id ) ? record.game.home.name : record.game.away.name;
 
 					status.html( 'You have picked the <b>' + winner + '</b> to beat the <b>' + loser + '</b>' );
 				}
