@@ -6,7 +6,7 @@
 		{% if is_granted( 'ROLE_ADMIN' ) %}
 			<li><a href="{{ path( 'app_admin') }}" title="Admin Control Panel">Admin Control Panel</a></li>
 		{% endif %}
-		<li><a href="" title="Make Picks">Make Picks</a></li>
+		<li><a href="{{ path( 'app_picks' ) }}" title="Make Picks">Make Picks</a></li>
 		<li><a href="" title="View Other Picks">View Other's Picks</a></li>
 		<li><a href="" title="Weekly Records">View Weekly Records</a></li>
 		<li><a href="{{ path( 'app_leaderboard' ) }}" title="Leader Board">View Leader Board</a></li>
