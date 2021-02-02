@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -47,30 +49,30 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $wins;
+    private $wins = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $losses;
+    private $losses = 0;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $paid;
+    private $paid = false;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $current_place;
+    private $current_place = 1;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $active;
+    private $active = true;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $message;
 
@@ -251,7 +253,7 @@ class User implements UserInterface
         return $this->message;
     }
 
-    public function setMessage(string $message): self
+    public function setMessage(?string $message): self
     {
         $this->message = $message;
 
