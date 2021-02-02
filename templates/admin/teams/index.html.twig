@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Teams{% endblock %}
+
+{% block content %}
+    <h1>Teams</h1>
+    {% for team in teams %}
+        <p>
+            <a href="{{ path( 'app_admin_teams_edit', { 'id': team.id } ) }}" title="Edit {{ team.name }}">{{ team.name }}</a>
+        </p>
+    {% endfor %}
+{% endblock %}
