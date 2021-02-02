@@ -31,16 +31,16 @@ class NewsController extends AbstractController
 	 */
 	public function add( Request $request, EntityManagerInterface $entity_manager )
 	{
-		$news = new News();
-
-		$form = $this->createForm( NewsType::class, $news );
+		$form = $this->createForm( NewsType::class );
 		$form->handleRequest( $request );
 
 		if ( $form->isSubmitted() && $form->isValid() )
 		{
 			/** @var User $user */
+			/** @var News $news */
 			$user = $this->getUser();
 
+			$news = $form->getData();
 			$news->setUser( $user );
 			$news->setIp( $request->getClientIp() );
 			$news->setPostDt( time() );

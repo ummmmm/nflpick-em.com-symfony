@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\NewsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=NewsRepository::class)
@@ -25,6 +26,7 @@ class News
 
     /**
      * @ORM\Column(type="string", length=255)
+	 * @Assert\NotBlank( message = "Title cannot be empty" )
      */
     private $title;
 
@@ -35,6 +37,7 @@ class News
 
     /**
      * @ORM\Column(type="text")
+	 * @Assert\NotBlank( message = "Data cannot be empty" )
      */
     private $data;
 
