@@ -3,21 +3,6 @@
 {% block title %}Contact{% endblock %}
 
 {% block content %}
-	{% for message in app.flashes( 'info' ) %}
-		<p><b>{{ message }}</b></p>
-	{% endfor %}
-
-	{% if errors|length %}
-		<div class="error">
-			<span class="error_text_top">The Following {{ errors|length == 1 ? 'Error Has' : errors|length ~ ' Errors Have' }} Occurred!</span><br />
-			<span class="error_text">
-					{% for error in errors %}
-						- {{ error.message }}<br />
-					{% endfor %}
-			</span>
-		</div>
-	{% endif %}
-
 	<fieldset>
 		<legend>Contact Form</legend>
 		{{ form_start( form ) }}
@@ -34,6 +19,8 @@
 			{{ form_widget( form.message ) }}<br />
 
 			{{ form_widget( form.submit ) }}<br />
+
+			{{ form_rest( form ) }}
 		{{ form_end( form, { 'render_rest': false } ) }}
 	</fieldset>
 {% endblock %}

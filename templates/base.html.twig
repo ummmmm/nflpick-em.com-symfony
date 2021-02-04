@@ -34,6 +34,19 @@
 						{% endfor %}
 					{% endblock %}
 
+					{% block formErrors %}
+						{% if formErrors is defined and formErrors|length %}
+							<div class="error">
+								<span class="error_text_top">The Following {{ formErrors|length == 1 ? 'Error Has' : formErrors|length ~ ' Errors Have' }} Occurred!</span><br />
+								<span class="error_text">
+									{% for formError in formErrors %}
+										- {{ formError.message }}<br />
+									{% endfor %}
+								</span>
+							</div>
+						{% endif %}
+					{% endblock %}
+
 					{% block content %}{% endblock %}
 				</div>
 				<div class="sidenav">

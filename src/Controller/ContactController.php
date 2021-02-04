@@ -18,14 +18,12 @@ class ContactController extends AbstractController
 	/**
 	 * @Route( "/contact", name="app_contact" )
 	 */
-	public function new( Request $request, ValidatorInterface $validator ): Response
+	public function new( Request $request ): Response
 	{
 		$contact = new Contact();
 
 		$form = $this->createForm( ContactType::class, $contact );
 		$form->handleRequest( $request );
-
-		$errors = $validator->validate( $contact );
 
 		if ( $form->isSubmitted() && $form->isValid() )
 		{
@@ -35,6 +33,6 @@ class ContactController extends AbstractController
 			return $this->redirectToRoute( 'app_contact' );
 		}
 
-		return $this->render( 'contact/content.html.twig', [ 'form' => $form->createView(), 'errors' => $errors ] );
+		return $this->render( 'contact/content.html.twig', [ 'form' => $form->createView(), 'formErrors' => $form->getErrors( true, true ) ] );
 	}
 }
