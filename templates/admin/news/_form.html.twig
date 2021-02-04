@@ -1,1 +1,9 @@
-{{ form( form ) }}
+{{ form_start( form ) }}
+    {{ form_label( form.title ) }}
+	{{ form_widget( form.title ) }}<br />
+
+    {{ form_label( form.data ) }}
+	{{ form_widget( form.data ) }}<br />
+
+    {{ form_rest( form ) }}
+{{ form_end( form ) }}

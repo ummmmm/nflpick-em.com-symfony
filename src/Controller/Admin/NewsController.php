@@ -53,7 +53,7 @@ class NewsController extends AbstractController
 			return $this->redirectToRoute( 'app_admin_news' );
 		}
 
-		return $this->render( 'admin/news/add.html.twig', [ 'form' => $form->createView() ] );
+		return $this->render( 'admin/news/add.html.twig', [ 'form' => $form->createView(), 'formErrors' => $form->getErrors( true, true ) ] );
 	}
 
 	/**
@@ -80,7 +80,7 @@ class NewsController extends AbstractController
 			return $this->redirectToRoute( 'app_admin_news_edit', [ 'id' => $news->getId() ] );
 		}
 
-		return $this->render( 'admin/news/edit.html.twig', [ 'form' => $form->createView(), 'news' => $news ] );
+		return $this->render( 'admin/news/edit.html.twig', [ 'news' => $news, 'form' => $form->createView(), 'formErrors' => $form->getErrors( true, true ) ] );
 	}
 
 	/**
