@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block form_errors %}{% include '_form_errors.html.twig' %}{% endblock %}
+
+{% block content %}
+    {{ form_start(registrationForm) }}
+        <fieldset>
+            <legend>What's Your Name</legend>
+            {{ form_label( registrationForm.first_name ) }}
+            {{ form_widget(registrationForm.first_name) }}<br />
+            {{ form_label( registrationForm.last_name ) }}
+            {{ form_widget(registrationForm.last_name) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>What's Your Email</legend>
+            {{ form_widget(registrationForm.email) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Choose Your Password</legend>
+            {{ form_widget( registrationForm.plainPassword, { label: 'Password' } ) }}
+        </fieldset>
+
+        <input type="submit" value="Register" />
+    {{ form_end(registrationForm) }}
+{% endblock %}
