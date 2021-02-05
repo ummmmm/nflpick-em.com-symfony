@@ -1,0 +1,12 @@
+{{ form_start( form ) }}
+    {{ form_label( form.question ) }}
+    {{ form_widget( form.question ) }}<br />
+
+	{% if form.active is defined %}
+		{{ form_widget( form.active ) }}
+	{% endif %}
+
+    {{ form_rest( form ) }}
+
+	<input type="submit" value="Submit" />
+{{ form_end( form ) }}

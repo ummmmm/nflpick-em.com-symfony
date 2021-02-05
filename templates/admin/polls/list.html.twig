@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Polls{% endblock %}
+
+{% block content %}
+	<h1>Polls</h1>
+
+	{% for poll in polls %}
+		<p>
+			{% if not poll.active %}
+				<del>
+			{% endif %}
+			<a href="{{ path( 'app_admin_polls_edit', { 'id': poll.id } ) }}">{{ poll.question }}</a>
+			{% if not poll.active %}
+				</del>
+			{% endif %}
+	{% endfor %}
+{% endblock %}
