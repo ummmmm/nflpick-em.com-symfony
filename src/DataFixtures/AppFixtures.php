@@ -2,10 +2,12 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Week;
 use App\Factory\GameFactory;
 use App\Factory\NewsFactory;
 use App\Factory\PickFactory;
+use App\Factory\PollAnswerFactory;
+use App\Factory\PollFactory;
+use App\Factory\PollVoteFactory;
 use App\Factory\UserFactory;
 use App\Factory\WeekFactory;
 use App\Repository\TeamRepository;
@@ -16,12 +18,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AppFixtures extends Fixture
 {
 	private $encoder;
-	private $team_repository;
+	private $teamRepository;
 
-	public function __construct( UserPasswordEncoderInterface $encoder, TeamRepository $team_repository )
+	public function __construct( UserPasswordEncoderInterface $encoder, TeamRepository $teamRepository )
 	{
 		$this->encoder			= $encoder;
-		$this->team_repository	= $team_repository;
+		$this->teamRepository	= $teamRepository;
 	}
 
     public function load(ObjectManager $manager)
@@ -40,8 +42,8 @@ class AppFixtures extends Fixture
 		/*
 		 * Teams
 		 */
-		$this->team_repository->insertAll();
-		$teams = $this->team_repository->findAll();
+		$this->teamRepository->insertAll();
+		$teams = $this->teamRepository->findAll();
 
     	/*
     	 * Weeks / Games
@@ -81,6 +83,17 @@ class AppFixtures extends Fixture
 					->create();
 			}
 		}
+
+		/*
+		 * Polls
+		 */
+		PollFactory::createMany( 3 );
+		PollAnswerFactory::createMany( 5, [ 'poll' => PollFactory::random() ] );
+		PollAnswerFactory::createMany( 5, [ 'poll' => PollFactory::random() ] );
+		PollAnswerFactory::createMany( 5, [ 'poll' => PollFactory::random() ] );
+		PollVoteFactory::createOne( [ 'answer' => PollAnswerFactory::random(), 'user'=> UserFactory::random() ] );
+		PollVoteFactory::createOne( [ 'answer' => PollAnswerFactory::random(), 'user'=> UserFactory::random() ] );
+		PollVoteFactory::createOne( [ 'answer' => PollAnswerFactory::random(), 'user'=> UserFactory::random() ] );
 
     	$manager->flush();
     }
