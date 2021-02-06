@@ -43,12 +43,12 @@ class Contact
 		$this->email = $email;
 	}
 
-	public function getSubject(): string
+	public function getSubject(): ?string
 	{
 		return $this->subject;
 	}
 
-	public function setSubject( string $subject ): void
+	public function setSubject( ?string $subject ): void
 	{
 		$this->subject = $subject;
 	}
