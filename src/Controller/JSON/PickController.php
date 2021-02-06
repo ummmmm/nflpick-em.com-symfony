@@ -20,7 +20,7 @@ class PickController extends JSONController
 	/**
 	 * @Route( "/picks/game/{id}", name="app_picks_game", methods="POST" )
 	 */
-	public function makePick(Game $game, Request $request, EntityManagerInterface $entity_manager, PickRepository $pick_repository )
+	public function makePick(Game $game, Request $request, EntityManagerInterface $entityManager, PickRepository $pickRepository )
 	{
 		/** @var User $user */
 		$user		= $this->getUser();
@@ -41,7 +41,7 @@ class PickController extends JSONController
 			return $this->jsonFailure( '#Error#', 'This game has already started and can no longer be updated' );
 		}
 
-		if ( ( $pick = $pick_repository->findOnePickByUserGame( $user, $game ) ) === null )
+		if ( ( $pick = $pickRepository->findOnePickByUserGame( $user, $game ) ) === null )
 		{
 			$pick = new Pick();
 			$pick->setGame( $game );
@@ -51,9 +51,10 @@ class PickController extends JSONController
 		$pick->setIp( $request->getClientIp() );
 		$pick->setWinner( $winner_id == $home_team->getId() ? $home_team : $away_team );
 		$pick->setLoser( $loser_id == $home_team->getId() ? $home_team : $away_team );
+		$pick->setWeek( $game->getWeek() );
 
-		$entity_manager->persist( $pick );
-		$entity_manager->flush();
+		$entityManager->persist( $pick );
+		$entityManager->flush();
 
 		return $this->jsonSuccess();
 	}

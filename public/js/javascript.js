@@ -119,7 +119,7 @@ $( document ).ready( function(){
 				{
 					pick.append( record.game.away.name );
 				} else {
-					$.fn.picks_build_link( record.game.away.name, week.id, record.game.id, record.game.away, record.game.home ).appendTo( pick );
+					$.fn.picks_build_link( record.game.away.name, week.id, record.game.id, record.game.away.id, record.game.home.id ).appendTo( pick );
 				}
 
 				$.fn.picks_build_record( record.game.away.wins, record.game.away.losses, record.game.away.ties ).appendTo( pick );
@@ -135,10 +135,10 @@ $( document ).ready( function(){
 				$.fn.picks_build_record( record.game.home.wins, record.game.home.losses, record.game.home.ties ).appendTo( pick );
 				pick.append( '<br />' + record.game.home.stadium + ' - ' + record.game.time_formatted );
 
-				if ( record.game.pick != null )
+				if ( record.pick != null )
 				{
-					var winner 	= ( record.pick.winner_pick == record.game.home.id ) ? record.game.home.name : record.game.away.name;
-					var loser	= ( record.pick.loser_pick == record.game.home.id ) ? record.game.home.name : record.game.away.name;
+					var winner 	= ( record.pick.winner.id == record.game.home.id ) ? record.game.home.name : record.game.away.name;
+					var loser	= ( record.pick.loser.id == record.game.home.id ) ? record.game.home.name : record.game.away.name;
 
 					status.html( 'You have picked the <b>' + winner + '</b> to beat the <b>' + loser + '</b>' );
 				}
@@ -236,11 +236,11 @@ $( document ).ready( function(){
 
 	$.fn.makePicks = function( week, gameid, winner, loser )
 	{
-		$.fn.json(	'MakePicks',
-					'week=' + encodeURIComponent( week ) +
-					'&gameid=' + encodeURIComponent( gameid ) +
-					'&winner=' + encodeURIComponent( winner ) +
-					'&loser=' + encodeURIComponent( loser ),
+		$.fn.json(	'/picks/game/' + gameid,
+			{
+				'winner_id': winner,
+				'loser_id': loser
+			},
 					function( response )
 					{
 						if ( !response.success )
