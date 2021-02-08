@@ -71,9 +71,11 @@ class PickController extends JSONController
 
 		foreach ( $games as $game )
 		{
-			$pick = $pickRepository->findOnePickByUserGame( $user, $game );
+			$pick		= $pickRepository->findOnePickByUserGame( $user, $game );
+			$game_date	= new \DateTime();
+			$game_date->setTimestamp( $game->getStart() );
 
-			array_push( $response[ 'games' ], array( 'game' => $game, 'pick' => $pick ) );
+			array_push( $response[ 'games' ], array( 'game' => $game, 'pick' => $pick, 'date_formatted' => $game_date->format( 'F d, Y' ), 'time_formatted' => $game_date->format( 'h:i a' ) ) );
 		}
 
 		return $this->jsonSuccess( $response );

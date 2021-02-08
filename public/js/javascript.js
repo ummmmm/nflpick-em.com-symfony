@@ -94,7 +94,7 @@ $( document ).ready( function(){
 
 			$.each( response.data.games, function( key, record )
 			{
-				var game_date = new Date( record.game.start );
+				const game_date = new Date( record.game.start * 1000 );
 
 				if ( $( '#day_' + days[ game_date.getDay() ] ).length == 0 )
 				{
@@ -106,11 +106,11 @@ $( document ).ready( function(){
 
 					$( '<span/>', {
 						'class'	: 'picks_date',
-						'text'	: record.game.date_formatted
+						'text'	: record.date_formatted
 					} ).appendTo( div );
 				}
 
-				var past		= ( week.locked || record.game.past ) ? true : false;
+				var past		= ( record.game.week.locked || ( Math.floor( Date.now() / 1000 ) > record.game.start  )) ? true : false;
 				var pick_class 	= ( past ) ? 'past' : ( ( record.pick === null ) ? 'notMade' : 'made' );
 				var pick 		= $( '<div/>', { 'id': 'picks' + record.game.id, 'class': 'make_picks ' + pick_class } );
 				var status		= $( '<div/>', { 'id': 'status' + record.game.id } );
@@ -133,7 +133,7 @@ $( document ).ready( function(){
 				}
 
 				$.fn.picks_build_record( record.game.home.wins, record.game.home.losses, record.game.home.ties ).appendTo( pick );
-				pick.append( '<br />' + record.game.home.stadium + ' - ' + record.game.time_formatted );
+				pick.append( '<br />' + record.game.home.stadium + ' - ' + record.time_formatted );
 
 				status.appendTo( pick );
 				pick.appendTo( div );
