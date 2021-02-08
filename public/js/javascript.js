@@ -4,7 +4,7 @@ $( document ).ready( function(){
 		$.ajax( {
 			type	: 'POST',
 			url		: path,
-			processData: false,
+			contentType: 'application/json',
 			data	: JSON.stringify( data ),
 			success	: function( response, status )
 			{
