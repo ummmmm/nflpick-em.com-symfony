@@ -24,9 +24,8 @@ class PickController extends JSONController
 	{
 		/** @var User $user */
 		$user		= $this->getUser();
-		$data		= json_decode( $request->getContent(), true );
-		$winner_id	= $data[ 'winner_id' ];
-		$loser_id	= $data[ 'loser_id' ];
+		$winner_id	= $request->get( 'winner_id' );
+		$loser_id	= $request->get( 'loser_id' );
 		$home_team	= $game->getHome();
 		$away_team	= $game->getAway();
 
