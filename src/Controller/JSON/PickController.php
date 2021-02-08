@@ -44,10 +44,10 @@ class PickController extends JSONController
 		if ( ( $pick = $pickRepository->findOnePickByUserGame( $user, $game ) ) === null )
 		{
 			$pick = new Pick();
-			$pick->setGame( $game );
-			$pick->setUser( $user );
 		}
 
+		$pick->setGame( $game );
+		$pick->setUser( $user );
 		$pick->setIp( $request->getClientIp() );
 		$pick->setWinner( $winner_id == $home_team->getId() ? $home_team : $away_team );
 		$pick->setLoser( $loser_id == $home_team->getId() ? $home_team : $away_team );

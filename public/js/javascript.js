@@ -69,9 +69,9 @@ $( document ).ready( function(){
 		div.appendTo( $( '#user' + user.id ) );
 	}
 
-	$.fn.picks_build_link = function( team, week_id, game_id, winner_id, loser_id )
+	$.fn.picks_build_link = function( team, game, winner_id, loser_id )
 	{
-		return $( '<a/>', { 'href': 'javascript:;', 'text': team } ).bind( 'click', function() { $.fn.makePicks( week_id, game_id, winner_id, loser_id ); } );
+		return $( '<a/>', { 'href': 'javascript:;', 'text': team } ).bind( 'click', function() { $.fn.makePicks( game, winner_id, loser_id ); } );
 	}
 
 	$.fn.picks_build_record = function( wins, losses, ties )
@@ -119,7 +119,7 @@ $( document ).ready( function(){
 				{
 					pick.append( record.game.away.name );
 				} else {
-					$.fn.picks_build_link( record.game.away.name, week.id, record.game.id, record.game.away.id, record.game.home.id ).appendTo( pick );
+					$.fn.picks_build_link( record.game.away.name, record.game, record.game.away.id, record.game.home.id ).appendTo( pick );
 				}
 
 				$.fn.picks_build_record( record.game.away.wins, record.game.away.losses, record.game.away.ties ).appendTo( pick );
@@ -129,24 +129,32 @@ $( document ).ready( function(){
 				{
 					pick.append( record.game.home.name );
 				} else {
-					$.fn.picks_build_link( record.game.home.name, week.id, record.game.id, record.game.home.id, record.game.away.id ).appendTo( pick );
+					$.fn.picks_build_link( record.game.home.name, record.game, record.game.home.id, record.game.away.id ).appendTo( pick );
 				}
 
 				$.fn.picks_build_record( record.game.home.wins, record.game.home.losses, record.game.home.ties ).appendTo( pick );
 				pick.append( '<br />' + record.game.home.stadium + ' - ' + record.game.time_formatted );
 
-				if ( record.pick != null )
-				{
-					var winner 	= ( record.pick.winner.id == record.game.home.id ) ? record.game.home.name : record.game.away.name;
-					var loser	= ( record.pick.loser.id == record.game.home.id ) ? record.game.home.name : record.game.away.name;
-
-					status.html( 'You have picked the <b>' + winner + '</b> to beat the <b>' + loser + '</b>' );
-				}
-
 				status.appendTo( pick );
 				pick.appendTo( div );
+
+				if ( record.pick != null )
+				{
+					$.fn.makePick( record.game, record.pick.winner.id, record.pick.loser.id );
+				}
 			} );
 		} );
+	}
+
+	$.fn.makePick = function( game, winner_id, loser_id )
+	{
+		let div, winner, loser;
+
+		div		= $( '#status' + game.id );
+		winner	= ( winner_id === game.home.id ) ? game.home.name : game.away.name;
+		loser	= ( loser_id === game.home.id ) ? game.home.name : game.away.name;
+
+		div.html( 'You have picked the <b>' + winner + '</b> to beat the <b>' + loser + '</b>' );
 	}
 
 	var highlighting = false;
@@ -234,12 +242,12 @@ $( document ).ready( function(){
 		} );
 	}
 
-	$.fn.makePicks = function( week, gameid, winner, loser )
+	$.fn.makePicks = function( game, winner_id, loser_id )
 	{
-		$.fn.json(	'/picks/game/' + gameid,
+		$.fn.json(	'/picks/game/' + game.id,
 			{
-				'winner_id': winner,
-				'loser_id': loser
+				'winner_id': winner_id,
+				'loser_id': loser_id
 			},
 					function( response )
 					{
@@ -248,9 +256,10 @@ $( document ).ready( function(){
 							return $.fn.error( response.error_message );
 						}
 
-						$( '#remainingPicks' ).text( response.data.remaining );
-						$( '#picks' + gameid ).animate( { 'background-color': '#FFFFE0' }, 600 );
-						$( '#status' + gameid ).html( response.data.message );
+						// $( '#remainingPicks' ).text( response.data.remaining );
+						$( '#picks' + game.id ).animate( { 'background-color': '#FFFFE0' }, 600 );
+
+						$.fn.makePick( game, winner_id, loser_id );
 					}
 		);
 	}
